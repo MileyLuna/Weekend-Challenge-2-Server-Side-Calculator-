@@ -2,7 +2,7 @@ $(onReady);
 
 function onReady() {
     console.log('IN READY');
-
+    getMath();
     //equal button click listener
     $('.equalBtn').on('click', equalBtn);
 
@@ -12,7 +12,7 @@ function onReady() {
     $('.multiply').on('click', multiplyBtn);
     $('.divide').on('click', divideBtn);
 
-    getMath();
+
 
 
 };
@@ -21,7 +21,7 @@ function onReady() {
 let newResults = {
     a: '',
     b: '',
-    operator: ''
+    operator: '',
 };
 
 function addBtn() {
@@ -46,31 +46,31 @@ function clearBtn() {
     $('.numTwo').val('');
 }
 
-//create function for calculate button
+//function for equal button
+//sends client input to server
 function equalBtn() {
     console.log('IN EQUAL');
 
-    //     let sum = 0;
-    //     let a = $('.numOne').val();
-    //     let b = $('.numTwo').val();
-    //     let buttonPressed = $(this).html();
-    //     console.log(buttonPressed);
+    newResults.a = $('.numOne').val();
+    newResults.b = $('.numTwo').val();
 
-    //     if (buttonPressed === "+"){
-    //         return a + b;
-    //     }else if (buttonPressed === "-"){
-    //         return a -b;
-    //     }else if (buttonPressed === "*"){
-    //         return a * b;
-    //     }else if (buttonPressed === "/"){
-    //         return a / b;
-    //     }
-    //     return sum;
+    $.ajax({
+        url: "/result",
+        method: "POST",
+        data: newResults
+    }).then(function (response) {
+        console.log(response);
+        addBtn();
+        subtractBtn();
+        multiplyBtn();
+        divideBtn();
+        
+        getMath();
+    }).catch(function(error){
+        console.log(error);
+        alert('ERROR IN POST')
+    })
 
-    // };
-
-
-    //function for clearing flieds 
 }
 
 function getMath() {
@@ -85,7 +85,7 @@ function getMath() {
         //set alert to catch errors
     }).catch(function (error) {
         console.log(error);
-        alert('ERROR IN GET /result')
+        alert('ERROR IN GET')
     })
     console.log('END getMath');
 }
@@ -93,8 +93,14 @@ function getMath() {
 function render(resultList) {
     //empty the result field
     $('.total').empty();
+    $('.list').empty();
     //for of loop to append HX to DOM
     for (let result of resultList) {
-        $('.list').append(`<li> ${result.a} ${result.operator} ${result.b} = </li>`)
+        $('.list').append(`<li> ${result.a} ${result.operator} ${result.b} = ${result.sum}</li>`)
     }
+    //there's a buuuug. Not sure where.
+    $('.total').append(`${resultList[resultList - 1].sum}`);
+
+    $('.numOne').val('');
+    $('.numTwo').val('');
 }
