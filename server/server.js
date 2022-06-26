@@ -3,9 +3,12 @@ const express = require('express');
 //import POST
 const bodyParser = require('body-parser');
 
+const resultList = require('./modules/result.js');
 
 const app = express();
 const PORT = 5000; 
+
+
 
 //Serve Static Files
 //to run/show HTML side
@@ -16,16 +19,17 @@ app.use(bodyParser.urlencoded({extended:true}));//for add.post. helps find data 
 
 
 //client request
-app.get('/quotes', function(req, res) {
-    console.log('IN GET QUOTES');
-    //res.send(------);
+app.get('/result', function(req, res) {
+    console.log('IN RESULT LIST');
+    res.send(resultList);
 })
 
 //client dynamatic (new) request
-app.post('/quotes', (req, res) => { 
-    console.log('POST /quotes', req.body);
+app.post('/result', (req, res) => { 
+    console.log('POST /resultList', req.body);
     // push new array/variable/function to old array/variable/function
-    //-----.push(req.body);
+    resultList.push(req.body);
+    res.sendStatus(201);
 
 });
 
