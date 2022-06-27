@@ -1,9 +1,15 @@
 # Project Name
-
-[Project Instructions](./INSTRUCTIONS.md), this line may be removed once you have updated the README.md
+Weekend 2 Server Side Calculato
 
 ## Description
 
-Your project description goes here. What problem did you solve? How did you solve it?
+Build a simple calculator that processes the client equation on the server side.
 
-Additional README details can be found [here](https://github.com/PrimeAcademy/readme-template/blob/master/README.md).
+Make two inputs for number value and four operator buttons (-,+,*,/). Will also need a equal (=), and clear (C) button. Show the equation result below and show history of equations. Clear button should not clear the history.
+
+
+## Prerequisites
+
+- HTML
+- Javascript/jQuery
+- Ajax
